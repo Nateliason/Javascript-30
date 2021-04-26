@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>JS + CSS Clock</title>
 </head>
+
 <body>
 
 
-    <div class="clock">
-      <div class="clock-face">
-        <div class="hand hour-hand"></div>
-        <div class="hand min-hand"></div>
-        <div class="hand second-hand"></div>
-      </div>
+  <div class="clock">
+    <div class="clock-face">
+      <div class="hand hour-hand"></div>
+      <div class="hand min-hand"></div>
+      <div class="hand second-hand"></div>
     </div>
+  </div>
 
 
   <style>
@@ -43,17 +45,18 @@
       position: relative;
       padding: 2rem;
       box-shadow:
-        0 0 0 4px rgba(0,0,0,0.1),
+        0 0 0 4px rgba(0, 0, 0, 0.1),
         inset 0 0 0 3px #EFEFEF,
         inset 0 0 10px black,
-        0 0 10px rgba(0,0,0,0.2);
+        0 0 10px rgba(0, 0, 0, 0.2);
     }
 
     .clock-face {
       position: relative;
       width: 100%;
       height: 100%;
-      transform: translateY(-3px); /* account for the height of the clock hands */
+      transform: translateY(-3px);
+      /* account for the height of the clock hands */
     }
 
     .hand {
@@ -62,13 +65,41 @@
       background: black;
       position: absolute;
       top: 50%;
+      transform-origin: 100%;
+      transform: rotate(90deg);
     }
-
   </style>
 
   <script>
+    const secHand = document.querySelector('.second-hand');
+    const minHand = document.querySelector('.min-hand');
+    const hourHand = document.querySelector('.hour-hand');
 
+    function handPlace(time) {
+      return (time * 6) + 90;
+    }
+
+    function setDate() {
+      // const time = Math.round(Date.now() / 1000);
+      const time = new Date;
+
+      const seconds = time.getSeconds();
+      console.log(seconds);
+      const secRotate = handPlace(seconds);
+      secHand.style.transform = `rotate(${secRotate}deg)`;
+
+      const minutes = time.getMinutes();
+      const minRotate = handPlace(minutes);
+      minHand.style.transform = `rotate(${minRotate}deg)`;
+
+      const hours = time.getHours();
+      const hourRotate = handPlace(hours);
+      hourHand.style.transform = `rotate(${hourRotate}deg)`;
+    }
+
+    setInterval(setDate, 1000);
 
   </script>
 </body>
+
 </html>
