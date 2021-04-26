@@ -63,10 +63,18 @@
     document.addEventListener("keydown", event => {
       const key = event.keyCode;
       let [button, sound] = document.querySelectorAll(`[data-key="${key}"]`);
+      sound.currentTime = 0;
       sound.play();
       button.classList.add('playing');
-      button.classList.remove('playing');
     })
+
+    function removeTransition(e) {
+      if (e.propertyName !== 'transform') return;
+      this.classList.remove('playing');
+    }
+
+    const keys = document.querySelectorAll('.key');
+    keys.forEach(key => key.addEventListener('transitionend', removeTransition));
   </script>
 
 
